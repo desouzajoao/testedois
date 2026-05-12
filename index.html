@@ -1,1 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAPERMOON.exe ✦ soft memories.zip</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        milk: '#F6F1EB',
+                        sakura: '#F5C9D2',
+                        dust: '#C7BDD8',
+                        baby: '#BFD7EA',
+                        cherry: '#8C314A',
+                        softblack: '#1E1B1B',
+                        cream: '#EDE4D8',
+                        peach: '#F2D1B3'
+                    },
+                    fontFamily: {
+                        anton: ['Anton', 'sans-serif'],
+                        editorial: ['Cormorant Garamond', 'serif'],
+                        sticker: ['Patrick Hand', 'cursive']
+                    },
+                    backgroundImage: {
+                        'paper-texture': "url('https://www.transparenttextures.com/patterns/rice-paper-2.png')",
+                        'grid-pattern': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMzAsIDI3LCAyNywgMC4xKSIvPjwvc3ZnPg==')"
+                    }
+                }
+            }
+        }
+    </script>
 
+    <style>
+        /* Base Setup & Cursor */
+        body {
+            background-color: #F6F1EB;
+            color: #1E1B1B;
+            cursor: crosshair; /* Y2K vibe cursor */
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Global Noise Overlay for that analog/xerox feel */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png');
+            animation: noise 0.5s infinite;
+        }
+
+        @keyframes noise {
+            0%, 100% { background-position: 0 0; }
+            10% { background-position: -5% -10%; }
+            20% { background-position: -15% 5%; }
+            30% { background-position: 7% -25%; }
+            40% { background-position: 20% 25%; }
+            50% { background-position: -25% 10%; }
+            60% { background-position: 15% 5%; }
+            70% { background-position: 0% 15%; }
+            80% { background-position: 25% 35%; }
+            90% { background-position: -10% 10%; }
+        }
+
+        /* Scrapbook Tape Effect */
+        .tape {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            z-index: 10;
+        }
+        .tape-top { width: 80px; height: 25px; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg); }
+        .tape-corner { width: 60px; height: 20px; top: -5px; left: -15px; transform: rotate(-45deg); }
+
+        /* Torn Paper Edge Effect (simplified with border/clip-path for CSS only) */
+        .torn-paper {
+            background: #EDE4D8;
+            position: relative;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.05);
+        }
+        .torn-paper::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: radial-gradient(circle, transparent, transparent 50%, #EDE4D8 50%, #EDE4D8 100%) 0 0 / 10px 10px repeat-x;
+        }
+
+        /* UI Buttons - Glassmorphism & Hover Glow */
+        .btn-kawaii {
+            border: 1px solid #1E1B1B;
+            background: rgba(246, 241, 235, 0.5); /* milk white semi-transparent */
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-kawaii:hover {
+            box-shadow: 0 0 15px rgba(245, 201, 210, 0.8); /* Sakura Pink glow */
+            transform: translateY(-2px);
+            background: rgba(245, 201, 210, 0.2);
+        }
+        .btn-kawaii::before {
+            content: '✦';
+            position: absolute;
+            right: -20px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .btn-kawaii:hover::before {
+            right: 10px;
+            opacity: 1;
+        }
+        .btn-kawaii:hover span {
+            padding-right: 15px;
+        }
+        .btn-kawaii span { transition: 0.3s; }
+
+        /* Animations */
+        .float { animation: float 6s ease-in-out infinite; }
+        .float-delayed { animation: float 6s ease-in-out 3s infinite; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Chaotic Grid / Polaroids */
+        .polaroid {
+            background: white;
+            padding: 10px 10px 30px 10px;
+            box-shadow: 2px 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 20;
+        }
+
+        /* Japanese Vertical Text */
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F6F1EB; }
+        ::-webkit-scrollbar-thumb { background: #F5C9D2; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C7BDD8; }
+
+        /* Fake Window Frame */
+        .window-frame {
+            border: 2px solid #1E1B1B;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .window-header {
+            border-bottom: 2px solid #1E1B1B;
+            background: #F5C9D2;
+            border-radius: 6px 6px 0 0;
+            padding: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-paper-texture bg-grid-pattern relative">
+
+    <div class="noise-overlay"></div>
+
+    <!-- Navigation / Header Fake Window -->
+    <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl z-50">
+        <div class="window-frame shadow-lg">
+            <div class="window-header font-sticker text-sm">
+                <span class="tracking-widest">C:\memories\index.html</span>
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 rounded-full border border-softblack bg-milk"></div>
+                    <div class="w-3 h-3 rounded-full border border-softblack bg-milk"></div>
+                    <div class="w-3 h-3 rounded-full border border-softblack bg-cherry cursor-pointer hover:bg-red-500"></div>
+                </div>
+            </div>
+            <div class="px-6 py-3 flex justify-between items-center bg-white/50">
+                <div class="font-anton text-2xl tracking-wide">PAPERMOON<span class="text-cherry text-sm">.exe</span></div>
+                <div class="hidden md:flex gap-6 font-sticker text-lg">
+                    <a href="#archive" class="hover:text-cherry transition-colors">archive ♡</a>
+                    <a href="#diary" class="hover:text-cherry transition-colors">diary ✦</a>
+                    <a href="#music" class="hover:text-cherry transition-colors">soundtrack ♪</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="min-h-screen relative pt-32 pb-20 overflow-hidden flex flex-col items-center justify-center">
+        
+        <!-- Background decorative elements -->
+        <div class="absolute top-20 left-10 md:left-32 font-editorial text-sakura text-4xl opacity-50 vertical-text float">夢想家</div>
+        <div class="absolute bottom-32 right-10 md:right-32 font-sticker text-dust text-2xl rotate-12 float-delayed">"memories never die" ♡</div>
+        <img src="https://placehold.co/100x100/F5C9D2/1E1B1B?text=✦" class="absolute top-1/4 right-1/4 rounded-full mix-blend-multiply opacity-60 w-16 h-16 animate-pulse" alt="star">
+
+        <!-- Main Hero Content (Collage Layout) -->
+        <div class="relative w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 px-6">
+            
+            <!-- Left Text Block -->
+            <div class="relative z-10 text-center md:text-left md:w-1/2">
+                <div class="font-editorial text-cherry italic text-lg mb-2">digital memories <br> <span class="pl-4">cut by hand ✦</span></div>
+                
+                <h1 class="font-anton text-7xl md:text-9xl leading-none tracking-tighter text-softblack mb-2 relative inline-block">
+                    PAPERMOON
+                    <!-- Decorative sparkle -->
+                    <span class="absolute -top-6 -right-10 font-sticker text-4xl text-dust">✧</span>
+                </h1>
+                
+                <div class="flex items-center justify-center md:justify-start gap-4 mb-8">
+                    <span class="font-sticker text-xl text-cherry">.exe</span>
+                    <span class="font-editorial text-sm tracking-widest text-gray-500">ペーパームーン</span>
+                </div>
+                
+                <p class="font-editorial text-xl md:text-2xl mb-8 max-w-md">
+                    Um universo visual que mistura nostalgia digital, anime shojo dos anos 90 e colagens artesanais.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <button class="btn-kawaii px-8 py-3 font-anton tracking-widest text-lg rounded-sm">
+                        <span>ENTER</span>
+                    </button>
+                    <button class="btn-kawaii px-8 py-3 font-anton tracking-widest text-lg rounded-sm bg-sakura/30">
+                        <span>ARCHIVE</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Image Block (Main Editorial Image) -->
+            <div class="relative md:w-1/2 mt-10 md:mt-0 flex justify-center float">
+                <!-- Decorative Frame/Background -->
+                <div class="absolute -inset-4 bg-sakura/20 border border-dashed border-cherry/30 rotate-3 z-0 rounded-lg"></div>
+                
+                <!-- Main Image Container -->
+                <div class="relative z-10 bg-white p-2 shadow-xl rotate-[-2deg] transition-transform hover:rotate-0 duration-500">
+                    <div class="tape tape-top"></div>
+                    <!-- Using placeholder representing an anime/shojo girl looking nostalgic -->
+                    <img src="https://placehold.co/400x500/EDE4D8/1E1B1B?text=Shojo+Girl+\nAnalog+Scan" alt="Editorial Cover" class="w-full max-w-[350px] object-cover grayscale-[20%] sepia-[20%]">
+                    
+                    <!-- Little sticker overlay -->
+                    <div class="absolute -bottom-6 -right-6 font-sticker text-2xl bg-milk border border-softblack px-3 py-1 rotate-12 shadow-md">
+                        keep soft ♡
+                    </div>
+                </div>
+
+                <!-- Secondary smaller image (polaroid style) -->
+                <div class="absolute -left-10 bottom-10 polaroid rotate-[-15deg] z-20 w-32 hidden md:block">
+                    <div class="tape tape-corner"></div>
+                    <img src="https://placehold.co/150x150/BFD7EA/1E1B1B?text=Vaporwave\nSky" alt="Sky" class="w-full h-auto">
+                    <p class="font-sticker text-center mt-2 text-sm">2007.zip</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 font-sticker text-lg animate-bounce text-cherry flex flex-col items-center">
+            scroll down
+            <span>↓</span>
+        </div>
+    </section>
+
+    <!-- SECTION 02: MOODBOARD INFINITO -->
+    <section id="archive" class="py-20 relative border-t border-dashed border-softblack/30">
+        <div class="text-center mb-16">
+            <h2 class="font-anton text-5xl tracking-wide mb-2">ARCHIVE FOLDER</h2>
+            <p class="font-editorial italic text-xl text-cherry">internet feelings never die.</p>
+        </div>
+
+        <!-- Chaotic Grid Container -->
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 relative">
+            
+            <!-- Item 1 -->
+            <div class="polaroid rotate-3 mt-10 md:mt-0 col-span-1">
+                <img src="https://placehold.co/300x400/F2D1B3/1E1B1B?text=Messy\nRoom" class="w-full object-cover h-48 md:h-64 filter contrast-75 sepia-[30%]" alt="Mood 1">
+            </div>
+            
+            <!-- Item 2 (Sticker/Note) -->
+            <div class="bg-sakura/50 border border-softblack p-6 font-sticker text-xl rotate-[-5deg] self-center col-span-1 flex items-center justify-center min-h-[150px] shadow-sm relative">
+                <div class="tape tape-top"></div>
+                "you are made of stardust ✦"
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="polaroid rotate-[-2deg] mt-5 md:mt-20 col-span-2 md:col-span-1">
+                <img src="https://placehold.co/400x300/C7BDD8/1E1B1B?text=VHS\nTape" class="w-full object-cover h-40 md:h-56 grayscale" alt="Mood 2">
+                <div class="font-sticker text-center mt-2">vhs dreams.</div>
+            </div>
+            
+            <!-- Item 4 (Large Editorial) -->
+            <div class="border border-softblack bg-cream p-2 rotate-1 col-span-2 md:col-span-1 row-span-2">
+                <img src="https://placehold.co/300x600/1E1B1B/EDE4D8?text=Soft\nGrunge\nFashion" class="w-full object-cover h-full min-h-[300px] md:min-h-[400px]" alt="Mood 3">
+                <p class="font-editorial text-sm mt-2 text-right">scan #042</p>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="polaroid rotate-[4deg] col-span-1 md:col-start-2">
+                <div class="tape tape-corner"></div>
+                <img src="https://placehold.co/300x300/F6F1EB/8C314A?text=Cherry\nWine" class="w-full object-cover h-40" alt="Mood 4">
+            </div>
+
+            <!-- Item 6 (Torn Paper Note) -->
+            <div class="torn-paper p-6 font-editorial text-lg italic rotate-[-3deg] col-span-2 md:col-span-1 md:col-start-3 self-end mb-10">
+                Lembro da luz de neon refletindo na poça d'água, enquanto tocava aquela música do Cassiopeia no meu fone de ouvido rachado.
+            </div>
+
+            <!-- Background decorative sketches -->
+            <div class="absolute top-1/2 left-1/4 font-sticker text-6xl text-baby/40 -z-10 rotate-45">♡</div>
+            <div class="absolute bottom-10 right-1/3 font-sticker text-8xl text-sakura/30 -z-10">✧</div>
+        </div>
+    </section>
+
+    <!-- SECTION 03: DIÁRIO VISUAL -->
+    <section id="diary" class="py-20 bg-cream/50 relative border-t border-dashed border-softblack/30">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="font-anton text-5xl tracking-wide mb-12 text-center">SECRET DIARY</h2>
+            
+            <div class="flex flex-col gap-12">
+                <!-- Entry 1 -->
+                <div class="flex flex-col md:flex-row gap-6 items-center bg-white border border-softblack p-4 md:p-6 shadow-[5px_5px_0px_#1E1B1B] transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full md:w-1/3 relative">
+                        <div class="tape tape-top"></div>
+                        <img src="https://placehold.co/300x300/BFD7EA/1E1B1B?text=Rain\nWindow" alt="Diary 1" class="w-full border border-gray-200">
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <div class="font-sticker text-cherry mb-2">14 de Novembro, 2007</div>
+                        <h3 class="font-anton text-2xl mb-3">PINK NOISE</h3>
+                        <p class="font-editorial text-lg leading-relaxed mb-4">
+                            O som da internet discada conectando soa como uma promessa. Uma promessa de que em algum lugar daquele labirinto de fóruns HTML, alguém entende esse sentimento de estar deslocado. A tela do monitor de tubo joga uma luz azul no meu quarto escuro.
+                        </p>
+                        <div class="font-sticker flex gap-2 text-sm text-gray-500">
+                            <span>#nostalgia</span>
+                            <span>#web1.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entry 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-6 items-center bg-milk border border-softblack p-4 md:p-6 shadow-[-5px_5px_0px_#8C314A] transform hover:-translate-y-1 transition-transform">
+                    <div class="w-full md:w-1/3 relative">
+                        <div class="tape tape-top"></div>
+                        <img src="https://placehold.co/300x300/C7BDD8/1E1B1B?text=Manga\nPages" alt="Diary 2" class="w-full border border-gray-200 grayscale">
+                    </div>
+                    <div class="w-full md:w-2/3 text-right">
+                        <div class="font-sticker text-sakura font-bold mb-2">03 de Março, 2008</div>
+                        <h3 class="font-anton text-2xl mb-3">SAKURA STATIC</h3>
+                        <p class="font-editorial text-lg leading-relaxed mb-4">
+                            Recortei pedaços daquela revista de moda japonesa que comprei na Liberdade. Tem algo na textura do papel impresso misturado com a cola em bastão que acalma minha mente caótica. É como organizar pensamentos usando imagens das outras pessoas.
+                        </p>
+                        <div class="font-sticker flex justify-end gap-2 text-sm text-gray-500">
+                            <span>#collage</span>
+                            <span>#shojo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 04: MUSIC PLAYER & FOOTER -->
+    <section id="music" class="pt-20 pb-10 relative">
+        <!-- Decorative Background -->
+        <div class="absolute inset-0 bg-sakura/10 -z-10 border-t border-softblack"></div>
+        
+        <div class="max-w-2xl mx-auto px-6 text-center mb-10">
+            <h2 class="font-anton text-4xl mb-2">CURRENT SOUNDTRACK</h2>
+            <p class="font-sticker text-cherry text-lg">for lonely souls ♡</p>
+        </div>
+
+        <!-- Fake Player UI -->
+        <div class="max-w-md mx-auto bg-[#e5e5e5] border-2 border-softblack rounded-xl p-1 shadow-[4px_4px_0px_#1E1B1B] relative z-10 mb-20">
+            <div class="bg-white border-2 border-softblack rounded-lg p-4">
+                <div class="flex items-center gap-4 mb-4">
+                    <!-- Album Cover -->
+                    <div class="w-16 h-16 bg-baby border border-softblack overflow-hidden flex-shrink-0">
+                        <img src="https://placehold.co/100x100/BFD7EA/1E1B1B?text=Lamp" alt="Lamp Album" class="w-full h-full object-cover opacity-80">
+                    </div>
+                    <!-- Song Info -->
+                    <div class="text-left flex-grow">
+                        <div class="font-anton text-lg leading-tight">雨に花 (Ame ni Hana)</div>
+                        <div class="font-editorial text-sm text-gray-600">Lamp</div>
+                    </div>
+                    <!-- Love Icon -->
+                    <div class="font-sticker text-2xl text-cherry cursor-pointer hover:scale-110 transition-transform">♡</div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full h-2 bg-gray-200 rounded-full mb-2 overflow-hidden border border-gray-300">
+                    <div class="h-full bg-sakura w-1/3"></div>
+                </div>
+                <div class="flex justify-between font-sticker text-xs text-gray-500 mb-4">
+                    <span>1:35</span>
+                    <span>3:59</span>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center items-center gap-6">
+                    <button class="font-bold text-xl hover:text-sakura transition-colors">⏮</button>
+                    <button class="w-10 h-10 bg-softblack text-white rounded-full flex items-center justify-center hover:bg-cherry transition-colors shadow-md">
+                        ▶
+                    </button>
+                    <button class="font-bold text-xl hover:text-sakura transition-colors">⏭</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center font-sticker text-sm pb-6">
+            <div class="flex justify-center gap-4 mb-4">
+                <span class="bg-milk px-2 py-1 border border-softblack rotate-[-2deg]">dreams archived in paper</span>
+                <span class="bg-sakura px-2 py-1 border border-softblack rotate-[1deg]">soft memories.zip</span>
+            </div>
+            <p class="text-gray-600 font-editorial">© 2007 - forever PAPERMOON.exe</p>
+            <p class="mt-2 text-xs text-gray-400">made with digital nostalgia</p>
+        </footer>
+    </section>
+
+    <!-- Floating Sticker Graphic -->
+    <img src="https://placehold.co/80x80/EDE4D8/1E1B1B?text=^_^" alt="Emoticon Sticker" class="fixed bottom-10 left-10 w-16 rotate-[-15deg] opacity-70 border border-dashed border-softblack p-1 bg-white hidden md:block mix-blend-multiply z-0 float">
+
+</body>
+</html>
